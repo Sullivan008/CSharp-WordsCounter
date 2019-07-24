@@ -1,0 +1,13 @@
+﻿@{WordsCounter.Models.ViewModels.NumberOfWordsOperationsViewModel numberOfWordsOperationsViewModel = ViewData.Model;}
+
+<ul class="list-group in" style="margin-bottom: 0;">
+    @{
+        foreach (KeyValuePair<string, Tuple<int, double>> item in numberOfWordsOperationsViewModel.NumberOfWordsTable)
+        {
+            <li class="list-group-item">
+                <span class="badge"> @item.Value.Item1 (@item.Value.Item2%)</span>
+                <span class="word">@item.Key</span>
+            </li>
+        }
+    }
+</ul>
