@@ -7,10 +7,6 @@ namespace WordsCounter.Controllers
 {
     public class HomeController : Controller
     {
-        /// <summary>
-        ///     GET - Index Page
-        /// </summary>
-        /// <returns>Index Page</returns>
         public ActionResult Index()
         {
             return View();
@@ -21,35 +17,37 @@ namespace WordsCounter.Controllers
         ///     Visszaadja, az összegző információkat, a paraméterben kapott
         ///     Input Text-ről
         /// </summary>
-        /// <param name="InputText">A vizsgálandó szöveg</param>
+        /// <param name="inputText">A vizsgálandó szöveg</param>
         /// <returns>
         ///     JSON objektum amely PartialView-okat tartalmazza - A PartialView-ok tartalmazzák azokat a HTML
         ///     blokkokat, amelyet a SummaryInformation-ban, a TopWords-ben illetve az AllWords Panelekben
         ///     kell elhelyezni.
         /// </returns>
         [HttpPost]
-        public JsonResult GetAnyInformationFromText(string InputText)
+        public JsonResult GetAnyInformationFromText(string inputText)
         {
-            NumberOfWordsOperationsViewModel numberOfWordsOperationsViewModel = 
-                CreateNumberOfWordsOperationsViewModel(new NumbersOfWordsOperations(InputText));
+            NumberOfWordsOperationsViewModel numberOfWordsOperationsViewModel =
+                CreateNumberOfWordsOperationsViewModel(new NumbersOfWordsOperations(inputText));
 
-            /// SummaryInformationPanelBody elkészítése
-            string summaryInformationInHTMLString =
-                RenderRazorViewToString("SummaryInformationPartialView", CreateSummaryInformationViewModel(new SummaryInformationOperations(InputText)));
+            string summaryInformationInHtmlString =
+                RenderRazorViewToString("SummaryInformationPartialView", CreateSummaryInformationViewModel(new SummaryInformationOperations(inputText)));
 
-            /// TopWordsPanelBody elkészítése
-            string topWordsInHTMLString =
+            string topWordsInHtmlString =
                 RenderRazorViewToString("TopWordsPartialView", numberOfWordsOperationsViewModel);
 
-            /// AllWordsPanelBody elkészítése
-            string allWordsInHTMLString =
+            string allWordsInHtmlString =
                 RenderRazorViewToString("AllWordsPartialView", numberOfWordsOperationsViewModel);
 
-            /// JSON Objektum visszatérítése
-            return Json(new { summaryInformationInHTMLString, topWordsInHTMLString, allWordsInHTMLString });
+            return Json(new
+            {
+                summaryInformationInHTMLString = summaryInformationInHtmlString,
+                topWordsInHTMLString = topWordsInHtmlString,
+                allWordsInHTMLString = allWordsInHtmlString
+            });
         }
 
-        #region Helpers
+        #region PRIVATE Helper Methods
+
         /// <summary>
         ///     Elkészít egy SummaryInformationViewModel objektumot, amely tartalmazni fogja
         ///     az összes olyan adatot, amely az összegző információhoz szükséges
@@ -123,6 +121,7 @@ namespace WordsCounter.Controllers
                 return stringWriter.GetStringBuilder().ToString();
             }
         }
+
         #endregion
     }
 }

@@ -2,35 +2,24 @@
     ViewBag.Title = WordsCounter.Resources.Shared.SharedTexts.Title;
 }
 
-<!--Értékeléseket tartalmazó Grid implementálása-->
 <div class="container-fluid">
-    <!--Első sor definiálása-->
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
-                <!--Első sor bal szélső oszlopának definiálása-->
                 <div class="col-sm-8">
-
-                    <!--PANEL - Amely tartalmazza a vizsgálandó szöveget-->
                     <div class="panel panel-primary">
-                        <!--Panel fejlécének elkészítése-->
                         <nav class="navbar navbar-default">
                             <div class="container-fluid">
-                                <!--A NAV-BAR-on található elemek megjelenítése-->
                                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                                     <label for="comment">@WordsCounter.Resources.Home.HomeIndexTexts.TextAreaLabel</label>
-                                    <!--NAV-BAR jobb oldalán található elemek implementálása-->
                                     <ul class="nav navbar-nav navbar-right">
-                                        <!-- A szolgáltatások üsszegyűjtése egy lenyíló fülbe -->
                                         <li>
-                                            <!--DROP-DOWN Inicializálása-->
                                             <a href="#operationsDropDown" class="dropdown-toggle" data-toggle="dropdown">
                                                 @WordsCounter.Resources.Home.HomeIndexTexts.OperationsButton
                                                 <span class="caret"></span>
                                             </a>
                                             <ul class="dropdown-menu" role="menu">
-                                                <!--ADATOK-TÖRLÉSE MENÜPONT Inicializálása-->
                                                 <li>
                                                     <a href="#deleteDatas" id="deleteTextAreaDatasButton">
                                                         <span class="glyphicon glyphicon-trash"> </span> @WordsCounter.Resources.Home.HomeIndexTexts.DeleteButton
@@ -42,12 +31,11 @@
                                 </div>
                             </div>
                         </nav>
-                        <!--Panel Törzsének inicializálása-->
+
                         <div class="panel-body">
                             <form>
                                 <div class="form-horizontal">
                                     <div class="form-group">
-                                        <!--Szöveg beviteli mező inicializálása-->
                                         <div class="col-lg-12">
                                             <textarea autocomplete="off" class="form-control" rows="10" id="textTextArea" placeholder="@WordsCounter.Resources.Home.HomeIndexTexts.TextAreaPlaceholder"></textarea>
                                         </div>
@@ -57,12 +45,9 @@
                         </div>
                     </div>
                 </div>
-                <!--Első sor első oszlopának definiálása-->
                 <div class=" col-md-4">
                     <div style="margin: 20px auto;">
-                        <!--Panel definiálása-->
                         <div class="panel panel-info">
-                            <!--Panel fejlécének definiálása-->
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a id="summaryPanelHref" class="colpsible-panel" data-toggle="collapse" href="#summaryPanel">
@@ -70,7 +55,6 @@
                                     </a>
                                 </h4>
                             </div>
-                            <!--Panel törzsének definiálása-->
                             <div id="summaryPanel" class="panel-collapse collapse in" aria-expanded="true">
                                 <ul class="list-group in" style="margin-bottom: 0;">
                                     <li class="list-group-item">
@@ -125,16 +109,13 @@
             </div>
         </div>
     </div>
-    <!--Második sor definiálása-->
+
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
-                <!--Második sor első oszlopának definiálása-->
                 <div class=" col-md-6">
                     <div style="margin: 20px auto;">
-                        <!--Panel definiálása-->
                         <div class="panel panel-info">
-                            <!--Panel fejlécének definiálása-->
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="colpsible-panel collapsed" data-toggle="collapse" href="#topWords">
@@ -142,18 +123,15 @@
                                     </a>
                                 </h4>
                             </div>
-                            <!--Panel törzsének definiálása-->
                             <div id="topWords" class="panel-collapse collapse">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--Második sor második oszlopának definiálása-->
+
                 <div class=" col-md-6">
                     <div style="margin: 20px auto;">
-                        <!--Panel definiálása-->
                         <div class="panel panel-info">
-                            <!--Panel fejlécének definiálása-->
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="colpsible-panel collapsed" data-toggle="collapse" href="#allWords">
@@ -161,7 +139,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            <!--Panel törzsének definiálása-->
+
                             <div id="allWords" class="panel-collapse collapse">
                             </div>
                         </div>

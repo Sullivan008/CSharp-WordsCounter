@@ -7,7 +7,7 @@ namespace WordsCounter.Controllers.Classes.Operations
 {
     public class SummaryInformationOperations
     {
-        private string inputText;
+        private readonly string _inputText;
 
         /// <summary>
         ///     Konstruktor
@@ -15,10 +15,11 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <param name="inputText">A felhasználó által megadott InputText</param>
         public SummaryInformationOperations(string inputText)
         {
-            this.inputText = inputText;
+            _inputText = inputText;
         }
 
-        #region PublicMethods
+        #region PUBLIC Methods
+
         /// <summary>
         ///     Visszatéríti, hogy hány darab szó található a Konstruktorban inicializált
         ///     inputText-ben
@@ -26,7 +27,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Szavak száma az InputText-ben</returns>
         public int GetWordsCount()
         {
-            return Regex.Matches(inputText, @"[\S]+").Count;
+            return Regex.Matches(_inputText, @"[\S]+").Count;
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Karakterek száma az InputText-ben</returns>
         public int GetCharactersCount()
         {
-            return inputText.Replace("\n","").Length;
+            return _inputText.Replace("\n", "").Length;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// </returns>
         public int GetCharacterCountsWithoutSpaces()
         {
-            return inputText.Count(c => !Char.IsWhiteSpace(c));
+            return _inputText.Count(c => !Char.IsWhiteSpace(c));
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Mondatok száma az InputText-ben</returns>
         public int GetSentencesCount()
         {
-            return inputText.Split(GlobalData.sentenceSeparators, StringSplitOptions.RemoveEmptyEntries).Length;
+            return _inputText.Split(GlobalData.SentenceSeparators, StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Paragrafusok száma az InputText-ben</returns>
         public int GetParagraphCount()
         {
-            return GetWordsCount() != 0 ? inputText.Count(x => (x == GlobalData.paragraphSeparator)) + 1 : 0;
+            return GetWordsCount() != 0 ? _inputText.Count(x => (x == GlobalData.ParagraphSeparator)) + 1 : 0;
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Alfanumerikus karakterek száma az InputText-ben</returns>
         public int GetAlphanumericCharactersCount()
         {
-            return inputText.Count(char.IsLetterOrDigit);
+            return _inputText.Count(char.IsLetterOrDigit);
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Numerikus karakterek száma az InputText-ben</returns>
         public int GetNumericCharactersCount()
         {
-            return inputText.Count(char.IsDigit);
+            return _inputText.Count(char.IsDigit);
         }
 
         /// <summary>
@@ -109,8 +110,8 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Az egyedi szavak száma az InputText-ben</returns>
         public int GetUniqueWordsCount()
         {
-            return new HashSet<String>(inputText.Split(GlobalData.wordSeparators, StringSplitOptions.RemoveEmptyEntries),
-              StringComparer.OrdinalIgnoreCase).Count;
+            return new HashSet<string>(_inputText.Split(GlobalData.WordSeparators, StringSplitOptions.RemoveEmptyEntries),
+                StringComparer.OrdinalIgnoreCase).Count;
         }
 
         /// <summary>
@@ -120,9 +121,11 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Rövid szavak száma az InputText-ben</returns>
         public int GetShortWordsCount()
         {
-            return inputText.Split(GlobalData.wordSeparators, StringSplitOptions.RemoveEmptyEntries)
-                .Where(x => (x.Length <= GlobalData.ShortWordsLength && !x.EndsWith(":")) ||
-                      (x.EndsWith(":") && x.Length <= (GlobalData.ShortWordsLength + 1)))
+            return _inputText
+                .Split(GlobalData.WordSeparators, StringSplitOptions.RemoveEmptyEntries)
+                .Where(x => x.Length <= GlobalData.ShortWordsLength &&
+                                 !x.EndsWith(":") ||
+                                  x.EndsWith(":") && x.Length <= GlobalData.ShortWordsLength + 1)
                 .ToList()
                 .Count;
         }
@@ -134,12 +137,13 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Rövid szavak száma az InputText-ben</returns>
         public int GetLongWordsCount()
         {
-            return inputText.Split(GlobalData.wordSeparators, StringSplitOptions.RemoveEmptyEntries)
+            return _inputText.Split(GlobalData.WordSeparators, StringSplitOptions.RemoveEmptyEntries)
                 .Where(x => (x.Length >= GlobalData.LongWordsLength && !x.EndsWith(":")) ||
                       (x.EndsWith(":") && x.Length > GlobalData.LongWordsLength))
                 .ToList()
                 .Count;
         }
+
         #endregion
     }
 }

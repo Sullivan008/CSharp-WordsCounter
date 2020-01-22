@@ -7,8 +7,8 @@ namespace WordsCounter.Controllers.Classes.Operations
 {
     public class NumbersOfWordsOperations
     {
-        private string inputText;
-        private SortedDictionary<string, int> finalWordsDictionary;
+        private readonly string _inputText;
+        private SortedDictionary<string, int> _finalWordsDictionary;
 
         /// <summary>
         ///     Konstruktor
@@ -16,12 +16,11 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <param name="inputText">A vizsgálandó szöveg</param>
         public NumbersOfWordsOperations(string inputText)
         {
-            this.inputText = inputText.ToLower();
+            _inputText = inputText.ToLower();
 
-            this.finalWordsDictionary = new SortedDictionary<string, int>();
+            _finalWordsDictionary = new SortedDictionary<string, int>();
         }
 
-        #region PublicMethods
         /// <summary>
         ///     Elkészít egy olyan listát, amely tartalmazza az egyedi szavakat
         ///     (A szükségtelen szavak nélkül) darabszámmal, szósűrűséggel.
@@ -29,36 +28,27 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// <returns>Lista, amely tartalmazza az egyedi szavakat, darabszámmal, szósűrűséggel.</returns>
         public List<KeyValuePair<string, Tuple<int, double>>> GetNumberOfWordsTable()
         {
-            /// Olyan táblázat elkészítése, amely tartalmazza az egyedi szavakat
             CreateUniqueWordsTable();
 
-            /// A felesleges szavak eltávolítása az előző lépésben elkészített táblázatból
             RemoveUnnecessaryWords();
 
-            /// Szavak előfordulásának, szósűrűségének megszámlálása
             return CountWords();
         }
-        #endregion
 
-        #region Helpers
+        #region PRIVATE Helper Methods
+
         /// <summary>
         ///     Elkészít egy olyan Listát, amelyben csak az egyedi szavak találhatóak
         ///     meg.
         /// </summary>
         private void CreateUniqueWordsTable()
         {
-            /// Tároljuk azokat a szavakat amelyek egyediek
             HashSet<string> uniqueWordsSet = GetUniqueWordsCount();
-            string currentItem;
 
-            /// Bejárjuk a HashSet-et
             foreach (string item in uniqueWordsSet)
             {
-                /// Karakterlánc tisztítása, a felesleges szóközöktől
-                currentItem = ClearWhitespacesFromString(item);
+                string currentItem = ClearWhitespacesFromString(item);
 
-                /// Vizsgálat, hogy a karakterlánc tartalmazza e a végén a kettőspont karaktert.
-                /// Ha igen, azt eltávolítjuk a Stringből
                 if (currentItem.EndsWith(":"))
                 {
                     currentItem = RemoveColonCharacter(currentItem);
@@ -66,8 +56,7 @@ namespace WordsCounter.Controllers.Classes.Operations
 
                 try
                 {
-                    /// Az elkészített, letisztított szó, hozzáadása a SortedDictionary-hoz
-                    AddNewWordToTheSortedDictionary(currentItem, finalWordsDictionary);
+                    AddNewWordToTheSortedDictionary(currentItem, _finalWordsDictionary);
                 }
                 catch (ArgumentException ex)
                 {
@@ -82,38 +71,28 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// </summary>
         private void RemoveUnnecessaryWords()
         {
-            bool currentWordIsUnnecessary;
-
-            /// Lista, amelyben tárolni fogjuk azokat a szavakat, amelyek nem feleslegesek
             SortedDictionary<string, int> currentWordsDictionary = new SortedDictionary<string, int>();
 
-            /// Bejárjuk az egyedi szavakat tartalmazó Dictionary-t
-            foreach (KeyValuePair<string, int> item in finalWordsDictionary)
+            foreach (KeyValuePair<string, int> item in _finalWordsDictionary)
             {
-                currentWordIsUnnecessary = false;
+                bool currentWordIsUnnecessary = false;
 
-                /// Bejárjuk a szükségtelen szavak tömböt
-                for (int i = 0; i < GlobalData.unnecessaryWords.Length; i++)
+                foreach (string unnecessaryWord in GlobalData.UnnecessaryWords)
                 {
-                    /// Vizsgáljuk, hogy az aktuális szó megegyezik-e valamelyik,
-                    /// szükségtelen szóval
-                    if (item.Key == GlobalData.unnecessaryWords[i].ToLower())
+                    if (item.Key == unnecessaryWord.ToLower())
                     {
                         currentWordIsUnnecessary = true;
                         break;
                     }
                 }
 
-                /// Megvizsgáljuk, hogy az aktuális szó, szükségtelen-e. Ha nem,
-                /// akkor hozzáadjuk a listához
                 if (!currentWordIsUnnecessary)
                 {
                     AddNewWordToTheSortedDictionary(item.Key, currentWordsDictionary);
                 }
             }
 
-            /// Átadjuk az aktuális SortedDictionary referenciáját a végeleges SortedDictionary-nak
-            finalWordsDictionary = currentWordsDictionary;
+            _finalWordsDictionary = currentWordsDictionary;
         }
 
         /// <summary>
@@ -121,35 +100,24 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// </summary>
         private List<KeyValuePair<string, Tuple<int, double>>> CountWords()
         {
-            /// Lekérdezzük az összes szószámot
             int wordsCount = GetWordsCount();
 
-            /// Lista, amelyben tárolni fogjuk az egyedi szavakat, az előfordulási számukkal
             SortedDictionary<string, int> currentWordsDictionary = new SortedDictionary<string, int>();
 
-            /// Lista, amelyben csökkenő sorrendben fogjuk tárolni a szavakat
-            List<KeyValuePair<string, int>> orderedWordsDictionary;
-
-            /// Lista, amelyben tárolni fogjuk az egyedi szavakat, az előfordulási számukkal, és a szósűrűségi értékkel
-            List<KeyValuePair<string, Tuple<int, double>>> finalWordsDictionaryList;
-
-            /// Bejárjuk az egyedi szavakat tartalmazó Dictionary-t
-            foreach (KeyValuePair<string, int> item in finalWordsDictionary)
+            foreach (KeyValuePair<string, int> item in _finalWordsDictionary)
             {
-                /// Hozzadjuk az aktuális Dictionary-nkhoz az egyedi szót, az előfordulási számmal együtt
                 AddNewWordToTheSortedDictionaryWithIncidence(item.Key,
-                    Regex.Matches(inputText, ("\\b" + item.Key + "\\b")).Count, currentWordsDictionary);
+                    Regex.Matches(_inputText, ("\\b" + item.Key + "\\b")).Count, currentWordsDictionary);
             }
 
-            /// Lista, amelyben csökkenő sorrendben fogjuk tárolni a szavakat
-            orderedWordsDictionary = currentWordsDictionary.OrderByDescending(x => x.Value).ToList();
+            List<KeyValuePair<string, int>> orderedWordsDictionary =
+                currentWordsDictionary.OrderByDescending(x => x.Value).ToList();
 
-            finalWordsDictionaryList = new List<KeyValuePair<string, Tuple<int, double>>>();
+            List<KeyValuePair<string, Tuple<int, double>>> finalWordsDictionaryList = new List<KeyValuePair<string, Tuple<int, double>>>();
 
-            /// Bejárjuk a csökkenő sorrendbe rendezett SortedDictionary-t
             foreach (KeyValuePair<string, int> item in orderedWordsDictionary)
             {
-                AddNewWordToTheSortedDictionaryWithIncidenceAndDensity(item.Key, item.Value, ((double)item.Value / (double)wordsCount) * 100, finalWordsDictionaryList);
+                AddNewWordToTheSortedDictionaryWithIncidenceAndDensity(item.Key, item.Value, (item.Value / (double)wordsCount) * 100, finalWordsDictionaryList);
             }
 
             return finalWordsDictionaryList;
@@ -181,7 +149,8 @@ namespace WordsCounter.Controllers.Classes.Operations
         /// </summary>
         /// <param name="item">A hozzáadandó szó</param>
         /// <param name="count">Szó szám</param>
-        /// <param name="wordsDictionary">Dictionary amelyhez hozzáadjuk a szükséges szót</param>
+        /// <param name="finalWordsDictionaryList">Dictionary amelyhez hozzáadjuk a szükséges szót</param>
+        /// <param name="density">Szó sűrűsége</param>
         private void AddNewWordToTheSortedDictionaryWithIncidenceAndDensity(string item, int count, double density, List<KeyValuePair<string, Tuple<int, double>>> finalWordsDictionaryList)
         {
             finalWordsDictionaryList.Add(new KeyValuePair<string, Tuple<int, double>>(item, new Tuple<int, double>(count, Math.Round(density, 2, MidpointRounding.AwayFromZero))));
@@ -200,8 +169,7 @@ namespace WordsCounter.Controllers.Classes.Operations
         }
 
         /// <summary>
-        ///     Függvény, amely kitörli a felesleges szóközöket, a
-        ///     String-ből
+        ///     Függvény, amely kitörli a felesleges szóközöket, a string-ből
         /// </summary>
         /// <param name="currentItem">Karakterlánc, amelyet tisztítani szeretnénk</param>
         /// <returns>Egy olyan karakterlánc, amely nem tartalmazza a felesleges szóközöket</returns>
@@ -211,13 +179,12 @@ namespace WordsCounter.Controllers.Classes.Operations
         }
 
         /// <summary>
-        ///     Visszatéríti, az egyedi szavakat a 
-        ///     Konstruktorban inicializált inputText-ben
+        ///     Visszatéríti, az egyedi szavakat a Konstruktorban inicializált inputText-ben
         /// </summary>
         /// <returns>Az egyedi szavak száma az InputText-ben</returns>
-        private HashSet<String> GetUniqueWordsCount()
+        private HashSet<string> GetUniqueWordsCount()
         {
-            return new HashSet<String>(inputText.Split(GlobalData.wordSeparators, StringSplitOptions.RemoveEmptyEntries),
+            return new HashSet<string>(_inputText.Split(GlobalData.WordSeparators, StringSplitOptions.RemoveEmptyEntries),
               StringComparer.OrdinalIgnoreCase);
         }
 
@@ -226,10 +193,11 @@ namespace WordsCounter.Controllers.Classes.Operations
         ///     inputText-ben
         /// </summary>
         /// <returns>Szavak száma az InputText-ben</returns>
-        public int GetWordsCount()
+        private int GetWordsCount()
         {
-            return Regex.Matches(inputText, @"[\S]+").Count;
+            return Regex.Matches(_inputText, @"[\S]+").Count;
         }
+
         #endregion
     }
 }

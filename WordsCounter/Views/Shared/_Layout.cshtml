@@ -9,33 +9,23 @@
     <meta name="author" content="Alpha-Tech Software & Design Studio" />
     <title>@ViewBag.Title</title>
 
-    @Scripts.Render("~/bundles/modernizr")
-    <!--CSS-ek definiálása-->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/SharedCSS/MyLayoutStyle.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
 
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
 
     @{
-        /// Elkészít egy SelectList-et a Nyelv kiválasztásához szükséges DropDownList-hez
         SelectList GetLanguageDictionaryElement()
         {
             int previouslySelectedLanguageIndex = 0;
-            HttpCookie languageCookie = System.Web.HttpContext.Current.Request.Cookies["Language"];
+            HttpCookie languageCookie = HttpContext.Current.Request.Cookies["Language"];
 
-            /// SelectList-hez tartozó ListItem-ek definiálása
             HashSet<SelectListItem> list = new WordsCounter.Controllers.Classes.Dictionary.LanguageDictionary().GetLanguageSelectListItem();
 
-            /// Vizsgálat, hogy a Cookie-kban található-e már korábbi nyelvi kód,
-            /// azaz választottunk-e már korábban nyelvet
-            if (languageCookie != null && languageCookie.Value != null)
+            if (languageCookie?.Value != null)
             {
                 foreach (SelectListItem item in list)
                 {
-                    /// Ha a Cookie-ban található nyelvi kód (EN, stb..) megegyezik
-                    /// valamelyik ListItem-ben található nyelvi kóddal, akkor annak
-                    /// kiolvassuk az indexét
                     if (item.Text == languageCookie.Value)
                     {
                         previouslySelectedLanguageIndex = Int32.Parse(item.Value);
@@ -44,24 +34,19 @@
                 }
             }
 
-            /// Visszaadunk egy olyan SelectList-et, amelyben az esetleg, már korábban
-            /// kiválasztott nyelvi kóddal rendelkező elem ki van belőle választva
             return new SelectList(list, "Value", "Text", previouslySelectedLanguageIndex);
         }
     }
 </head>
+
 <body style="padding-top:0px;">
-    <!--Navbar definiálása-->
     <div id="banner-area" class="banner-area">
-      
         <div class="parallax-overlay"></div>
-        <!-- Subpage title start -->
         <div class="banner-title-content">
             <div class="text-center">
                 <h2>@WordsCounter.Resources.Shared.SharedTexts.Title</h2>
             </div>
-        </div><!-- Subpage title end -->
-        <!--Bal oldalra definiálódnak a Nyelv kiválasztásához szüksgées elemek-->
+        </div>
         <ul class="nav navbar-nav navbar-left top-box">
             <li scale="0" style="margin-top: 15px; margin-right: 10px;">@WordsCounter.Resources.Shared.SharedTexts.Language</li>
             <li scale="0" style="margin-top: 7px; margin-bottom: -10px">@Html.DropDownList("Languages", GetLanguageDictionaryElement(), new { @class = "form-control" })</li>
@@ -69,10 +54,9 @@
     </div>
 
     <div class="container body-content">
-        <!--Törzs definiálása-->
         @RenderBody()
+
         <hr />
-        <!--Lábléc definiálása-->
         <footer>
             <center>
                 <p>&copy; <strong>@DateTime.Now.Year - <a href="#">Alpha-Tech Software & Design Studio</a>.</strong></p>
@@ -80,11 +64,11 @@
         </footer>
     </div>
 
-    <!--MyLayoutScript.js definiálása-->
     <script src="~/Scripts/SharedScripts/MyLayoutScript.js"></script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

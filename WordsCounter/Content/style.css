@@ -1,5 +1,25 @@
 ﻿body {
 }
+
+.navbar-brand {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.panel-heading .colpsible-panel:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    color: #408080;
+}
+
+.panel-heading .colpsible-panel.collapsed:after {
+    content: "\e080";
+}
+
 #banner-area {
     position: relative;
     height: 120px;
@@ -9,12 +29,14 @@
     background-position-y: 240%;
     background-attachment: fixed !important;
 }
+
 .banner-title-content {
     position: absolute;
     top: 38%;
     width: 100%;
     height: 100%;
 }
+
 .banner-title-content h2 {
     color: #fff;
     font-size: 36px;
@@ -34,14 +56,17 @@
     padding-top: 5px;
     border-radius: 0 0 10px 0;
 }
+
 .top-box li:first-child {
     color: #fff;
     font-weight: bold;
 }
+
 .top-box li:last-child {
     float: right;
     margin-right: 10px;
 }
+
 .parallax-overlay {
     position: absolute;
     left: 0;
@@ -54,30 +79,38 @@
 .body-content .panel-primary {
     margin-top: 20px;
 }
+
 .panel-body textarea {
     height: 383px;
 }
+
 .navbar-default label {
     margin-top: 15px;
 }
+
 .panel-heading {
     padding: 16px 15px;
 }
+
 .navbar-default {
     background-color: #d9edf7;
 }
+
 .navbar-default {
     border-color: #bce8f1;
     border-radius: 0px;
 }
+
 .navbar-collapse label{
     color: #31708f;
 }
+
 .navbar-default .navbar-nav > li > a:focus,
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a {
     color: #31708f;
 }
+
 .panel-primary {
     border-color: #bce8f1;
 }
