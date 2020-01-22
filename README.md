@@ -21,7 +21,7 @@ About the application technologies and operation:
 
 **What Is This?**
 
-Character Counter is an online character and word counting tool which is available in **English** and **Hungarian** and all results are immediately shown and it is ridiculously easy to use and of course.
+Character Counter is an online character and word counting tool which is available in **English** and **Hungarian** and all results are immediately shown and it is ridiculously easy to use.
 
 **How Is It Used?**
 
