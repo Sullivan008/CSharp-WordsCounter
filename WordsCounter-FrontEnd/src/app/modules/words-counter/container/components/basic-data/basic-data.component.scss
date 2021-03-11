@@ -1,0 +1,46 @@
+#basic-data {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
+  .flex-item {
+    width: 22%;
+    color: #4a4a4a;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+    margin-bottom: 2em;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+
+    .content {
+      text-align: center;
+
+      p {
+        margin-bottom: 0em;
+
+        &.label {
+          font-size: 11px;
+          letter-spacing: 1px;
+          margin-bottom: 5px;
+          text-transform: uppercase;
+        }
+
+        &.value {
+          color: #363636;
+          font-size: 2em;
+          font-weight: 600;
+          line-height: 1.125;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1310px) {
+      width: 48%;
+    }
+
+    @media only screen and (max-width: 848px) {
+      width: 100%;
+    }
+  }
+}
