@@ -1,6 +1,6 @@
 #banner-area {
   position: relative;
-  height: 4em;
+  height: 7.5em;
   background-color: #343a40;
 
   #banner-title-content {
@@ -14,6 +14,51 @@
       font-size: 2.25em;
       font-weight: 400;
       cursor: default;
+    }
+
+    h4 {
+      color: #ffffff;
+      font-size: 1.25em;
+      font-weight: 400;
+      cursor: default;
+    }
+  }
+
+  @media only screen and (max-width: 1178px) {
+    height: 6em;
+
+    #banner-title-content {
+      h2 {
+        font-size: 1.75em;
+      }
+
+      h4 {
+        font-size: 1em;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 942px) {
+    #banner-title-content {
+      h2 {
+        font-size: 1.35em;
+      }
+
+      h4 {
+        font-size: 0.975em;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 737px) {
+    #banner-title-content {
+      h2 {
+        font-size: 1.25em;
+      }
+
+      h4 {
+        font-size: 0.875em;
+      }
     }
   }
 }
