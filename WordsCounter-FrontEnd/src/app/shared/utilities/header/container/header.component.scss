@@ -1,0 +1,19 @@
+#banner-area {
+  position: relative;
+  height: 4em;
+  background-color: #343a40;
+
+  #banner-title-content {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    height: 100%;
+
+    h2 {
+      color: #ffffff;
+      font-size: 2.25em;
+      font-weight: 400;
+      cursor: default;
+    }
+  }
+}

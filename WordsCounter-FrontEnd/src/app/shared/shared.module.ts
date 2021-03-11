@@ -11,9 +11,10 @@ import { DropDownDirective } from './directives/dropdown.directive';
 
 import { RibbonToastrComponent } from './utilities/ribbon-toastr/container/ribbon-toastr.component';
 import { LoadingSpinnerComponent } from './utilities/loading-spinner/container/loading-spinner.component';
+import { HeaderComponent } from './utilities/header/container/header.component';
 
 @NgModule({
-  declarations: [DropDownDirective, RibbonToastrComponent, LoadingSpinnerComponent],
+  declarations: [DropDownDirective, RibbonToastrComponent, LoadingSpinnerComponent, HeaderComponent],
   imports: [RouterModule, ReactiveFormsModule, CommonModule, HttpClientModule, NgxSpinnerModule, FontAwesomeModule],
   exports: [
     RouterModule,
@@ -24,6 +25,7 @@ import { LoadingSpinnerComponent } from './utilities/loading-spinner/container/l
     LoadingSpinnerComponent,
     FontAwesomeIconsModule,
     FontAwesomeModule,
+    HeaderComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [RibbonToastrComponent],
