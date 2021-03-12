@@ -1,0 +1,8 @@
+<app-custom-accordion headerTitle="Text analysis">
+  <ul class="list-group">
+    <words-counter-text-analysis-item
+      *ngFor="let item of textAnalysisItems"
+      [textAnalysisItem]="item"
+    ></words-counter-text-analysis-item>
+  </ul>
+</app-custom-accordion>

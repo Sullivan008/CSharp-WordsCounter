@@ -6,5 +6,51 @@
     words-counter-basic-data {
       width: 100%;
     }
+
+    &:nth-child(2) {
+      width: 100%;
+
+      .content-row-column {
+        &:first-child {
+          width: 77%;
+
+          textarea {
+            box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+            height: 35.45em;
+          }
+        }
+
+        &:last-child {
+          width: 23%;
+        }
+      }
+
+      .content-row-column + .content-row-column {
+        margin-left: 4em;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 848px) {
+    .content-row {
+      &:nth-child(2) {
+        flex-direction: column;
+
+        .content-row-column {
+          &:first-child {
+            width: 100%;
+          }
+
+          &:last-child {
+            width: 100%;
+          }
+        }
+
+        .content-row-column + .content-row-column {
+          margin-left: 0em;
+          margin-top: 2em;
+        }
+      }
+    }
   }
 }

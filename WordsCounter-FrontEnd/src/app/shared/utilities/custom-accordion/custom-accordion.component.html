@@ -1,0 +1,10 @@
+<accordion [isAnimated]="isAnimated">
+  <accordion-group #header [showArrows]="true" [isOpen]="isOpen">
+    <h3 accordion-heading>
+      {{ headerTitle }}
+      <span *ngIf="header.isOpen" class="float-right"><fa-icon icon="chevron-up"></fa-icon></span>
+      <span *ngIf="!header.isOpen" class="float-right"><fa-icon icon="chevron-down"></fa-icon></span>
+    </h3>
+    <div class="accordion-content"><ng-content></ng-content></div>
+  </accordion-group>
+</accordion>

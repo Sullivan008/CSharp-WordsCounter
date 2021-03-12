@@ -1,0 +1,56 @@
+accordion {
+  ::ng-deep {
+    accordion-group {
+      .panel {
+        border-radius: 6px;
+        box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+
+        .panel-heading.card-header {
+          padding: 0.65rem 1.05rem;
+        }
+
+        .panel-title {
+          div[role='button'] {
+            h3 {
+              font-size: 1.135rem;
+              padding-left: 0em;
+              margin-bottom: 0em;
+            }
+
+            &[aria-expanded='false'] {
+              h3 {
+                color: #000000;
+                text-decoration: none;
+
+                &:hover,
+                &:focus {
+                  color: #868686;
+                }
+
+                &:active {
+                  color: #5b5b5b;
+                }
+              }
+            }
+
+            &[aria-expanded='true'] {
+              h3 {
+                color: #696969;
+
+                &:hover,
+                &:active,
+                &:focus {
+                  color: #868686;
+                }
+              }
+            }
+          }
+        }
+
+        .panel-body {
+          padding: 0em;
+        }
+      }
+    }
+  }
+}

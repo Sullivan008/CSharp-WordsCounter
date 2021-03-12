@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BasicDataComponent } from './container/components/basic-data/basic-data.component';
+import { TextAnalysisItemComponent } from './container/components/text-analysis/text-analysis-item/text-analysis-item.component';
+import { TextAnalysisComponent } from './container/components/text-analysis/text-analysis.component';
 import { WordsCounterComponent } from './container/words-counter.component';
 import { WordsCounterRoutingModule } from './words-counter-routing.module';
 
 @NgModule({
-  declarations: [WordsCounterComponent, BasicDataComponent],
+  declarations: [WordsCounterComponent, BasicDataComponent, TextAnalysisComponent, TextAnalysisItemComponent],
   imports: [WordsCounterRoutingModule, SharedModule],
 })
 export class WordsCounterModule {}
