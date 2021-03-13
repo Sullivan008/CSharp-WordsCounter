@@ -9,15 +9,15 @@ import { TextAnalysisItemModel } from 'src/app/modules/words-counter/models/text
 })
 export class TextAnalysisComponent {
   public textAnalysisItems: TextAnalysisItemModel[] = [
-    { type: 'Characters', value: '1 (%6,67)' },
-    { type: 'Characters without space', value: '2' },
-    { type: 'Sentences', value: '3' },
-    { type: 'Paragraphs', value: '4' },
-    { type: 'Alphanumeric characters', value: '4' },
-    { type: 'Numeric characters', value: '4' },
-    { type: 'Alpha characters', value: '4' },
-    { type: 'Unique words', value: '4' },
-    { type: 'Short words', value: '4' },
-    { type: 'Long words', value: '4' },
+    { typeName: 'Characters', quantity: 1 },
+    { typeName: 'Characters without space', quantity: 2 },
+    { typeName: 'Sentences', quantity: 3 },
+    { typeName: 'Paragraphs', quantity: 4 },
+    { typeName: 'Alphanumeric characters', quantity: 4 },
+    { typeName: 'Numeric characters', quantity: 4 },
+    { typeName: 'Alpha characters', quantity: 4 },
+    { typeName: 'Unique words', quantity: 4 },
+    { typeName: 'Short words', quantity: 4 },
+    { typeName: 'Long words', quantity: 4 },
   ];
 }

@@ -1,4 +1,4 @@
 export interface TextAnalysisItemModel {
-  type: string;
-  value: string;
+  typeName: string;
+  quantity: number;
 }
