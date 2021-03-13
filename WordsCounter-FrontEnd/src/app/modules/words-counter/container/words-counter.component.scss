@@ -2,6 +2,7 @@
   .content-row {
     display: flex;
     width: 100%;
+    margin-bottom: 2em;
 
     words-counter-basic-data {
       width: 100%;
@@ -24,10 +25,24 @@
           width: 23%;
         }
       }
+    }
 
-      .content-row-column + .content-row-column {
-        margin-left: 4em;
+    &:nth-child(3) {
+      width: 100%;
+
+      .content-row-column {
+        &:first-child {
+          width: 50%;
+        }
+
+        &:last-child {
+          width: 50%;
+        }
       }
+    }
+
+    .content-row-column + .content-row-column {
+      margin-left: 4em;
     }
   }
 
@@ -45,11 +60,25 @@
             width: 100%;
           }
         }
+      }
 
-        .content-row-column + .content-row-column {
-          margin-left: 0em;
-          margin-top: 2em;
+      &:nth-child(3) {
+        flex-direction: column;
+
+        .content-row-column {
+          &:first-child {
+            width: 100%;
+          }
+
+          &:last-child {
+            width: 100%;
+          }
         }
+      }
+
+      .content-row-column + .content-row-column {
+        margin-left: 0em;
+        margin-top: 2em;
       }
     }
   }

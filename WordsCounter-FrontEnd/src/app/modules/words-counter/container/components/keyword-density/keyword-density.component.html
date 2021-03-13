@@ -1,0 +1,8 @@
+<app-custom-accordion headerTitle="{{ panelTitle }}">
+  <ul class="list-group">
+    <words-counter-keyword-density-item
+      *ngFor="let item of keywordDensities"
+      [keywordDensityItem]="item"
+    ></words-counter-keyword-density-item>
+  </ul>
+</app-custom-accordion>
