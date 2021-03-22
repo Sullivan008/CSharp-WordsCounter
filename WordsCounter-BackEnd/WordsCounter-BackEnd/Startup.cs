@@ -28,6 +28,7 @@ namespace Application.Web
             );
 
             services.ConfigureReadOnlyDbContext();
+            services.ConfigureMediatR();
 
 
             services.AddControllers();
