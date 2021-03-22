@@ -1,4 +1,8 @@
-﻿namespace Application.DataAccessLayer.Context
+﻿using System.Linq;
+using Application.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace Application.DataAccessLayer.Context
 {
     public class WordsCounterReadOnlyDbContext
     {
@@ -8,5 +12,7 @@
         {
             _context = context;
         }
+
+        public IQueryable<ApplicationLog> ApplicationLogs => _context.ApplicationLog.AsNoTracking();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.DataAccessLayer.Context
 {
@@ -16,7 +17,7 @@ namespace Application.DataAccessLayer.Context
 
         #region DbSets
             
-        
+        public DbSet<ApplicationLog> ApplicationLog { get; set; }
 
         #endregion
     }

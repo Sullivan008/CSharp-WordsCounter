@@ -4,14 +4,16 @@ using Application.DataAccessLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Application.DataAccessLayer.Migrations
 {
     [DbContext(typeof(WordsCounterDbContext))]
-    partial class WordsCounterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210322082421_AddApplicationLogEntity")]
+    partial class AddApplicationLogEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
