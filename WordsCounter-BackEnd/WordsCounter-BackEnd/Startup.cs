@@ -1,5 +1,6 @@
 using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
+using Application.Web.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,8 @@ namespace Application.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.AddGlobalErrorHandlerMiddleware();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
