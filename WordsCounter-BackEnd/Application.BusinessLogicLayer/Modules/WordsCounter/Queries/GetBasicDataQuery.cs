@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.MediatR;
@@ -28,7 +30,9 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         {
             GetBasicDataResponseModel responseModel = new GetBasicDataResponseModel
             {
-                Characters = await Task.Run(() => GetCharactersCount(request.InputText), cancellationToken)
+                Characters = await Task.Run(() => GetCharactersCount(request.InputText), cancellationToken),
+                CharactersWithoutSpaces = await Task.Run(() => GetCharactersWithoutSpacesCount(request.InputText), cancellationToken),
+                Words = await Task.Run(() => GetWordsCount(request.InputText), cancellationToken)
             };
 
             return responseModel;
@@ -37,6 +41,18 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         private static int GetCharactersCount(string inputText)
         {
             return inputText.Replace(Environment.NewLine, string.Empty).Length;
+        }
+
+        private static int GetCharactersWithoutSpacesCount(string inputText)
+        {
+            return inputText.Count(x => !char.IsWhiteSpace(x));
+        }
+
+        private static int GetWordsCount(string inputText)
+        {
+            Regex pattern = new Regex(@"[^\W](\w|[-']{1,2}(?=\w))*", RegexOptions.IgnorePatternWhitespace);
+
+            return pattern.Matches(inputText).Count;
         }
     }
 }
