@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using System.Threading.Tasks;
+using Application.BusinessLogicLayer.Modules.WordsCounter.RequestModels;
+using Application.BusinessLogicLayer.Modules.WordsCounter.ResponseModels;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
@@ -13,6 +16,14 @@ namespace Application.Web.Controllers
         public WordsCounterController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpPost("GetBasicData")]
+        public async Task<ActionResult> GetBasicData(GetBasicDataRequestModel requestModel)
+        {
+            GetBasicDataResponseModel responseModel = new GetBasicDataResponseModel();
+
+            return Ok(responseModel);
         }
     }
 }
