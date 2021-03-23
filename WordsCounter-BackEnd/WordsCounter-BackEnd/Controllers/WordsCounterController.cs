@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Application.BusinessLogicLayer.Modules.WordsCounter.Queries;
 using Application.BusinessLogicLayer.Modules.WordsCounter.RequestModels;
 using Application.BusinessLogicLayer.Modules.WordsCounter.ResponseModels;
 using MediatR;
@@ -21,7 +22,7 @@ namespace Application.Web.Controllers
         [HttpPost("GetBasicData")]
         public async Task<ActionResult> GetBasicData(GetBasicDataRequestModel requestModel)
         {
-            GetBasicDataResponseModel responseModel = new GetBasicDataResponseModel();
+            GetBasicDataResponseModel responseModel = await _mediator.Send(new GetBasicDataQuery(requestModel));
 
             return Ok(responseModel);
         }
