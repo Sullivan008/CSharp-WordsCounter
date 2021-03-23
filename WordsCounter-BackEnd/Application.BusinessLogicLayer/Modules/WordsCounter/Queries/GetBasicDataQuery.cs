@@ -21,7 +21,7 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         }
     }
 
-    public class GetBasicDataQueryHandler: QueryBase<GetBasicDataQuery, GetBasicDataResponseModel>
+    public class GetBasicDataQueryHandler : QueryBase<GetBasicDataQuery, GetBasicDataResponseModel>
     {
         public GetBasicDataQueryHandler(WordsCounterReadOnlyDbContext context) : base(context)
         { }
@@ -32,7 +32,8 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
             {
                 Characters = await Task.Run(() => GetCharactersCount(request.InputText), cancellationToken),
                 CharactersWithoutSpaces = await Task.Run(() => GetCharactersWithoutSpacesCount(request.InputText), cancellationToken),
-                Words = await Task.Run(() => GetWordsCount(request.InputText), cancellationToken)
+                Words = await Task.Run(() => GetWordsCount(request.InputText), cancellationToken),
+                Sentences = await Task.Run(() => GetSentencesCount(request.InputText), cancellationToken)
             };
 
             return responseModel;
@@ -53,6 +54,11 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
             Regex pattern = new Regex(@"[^\W](\w|[-']{1,2}(?=\w))*", RegexOptions.IgnorePatternWhitespace);
 
             return pattern.Matches(inputText).Count;
+        }
+
+        private static int GetSentencesCount(string inputText)
+        {
+            return Regex.Split(inputText, @"(?<=[\.!\?])\s+").Length;
         }
     }
 }
