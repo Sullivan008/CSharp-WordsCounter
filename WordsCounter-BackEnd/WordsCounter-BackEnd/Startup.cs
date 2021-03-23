@@ -6,7 +6,6 @@ using Application.Web.Core.Configurations;
 using Application.Web.Core.Extensions;
 using Application.Web.Core.Swagger;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -45,7 +44,7 @@ namespace Application.Web
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider, IOptions<CorsConfigurationModel> corsConfiguration, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider, IOptions<CorsConfigurationModel> corsConfiguration)
         {
             app.AddGlobalErrorHandlerMiddleware();
 
@@ -54,11 +53,7 @@ namespace Application.Web
                 .AllowAnyHeader()
                 .AllowCredentials());
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.ConfigureSwagger(provider);
 
