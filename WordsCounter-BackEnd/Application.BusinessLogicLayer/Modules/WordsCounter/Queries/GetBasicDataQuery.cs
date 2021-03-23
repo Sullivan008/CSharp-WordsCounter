@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.MediatR;
 using Application.BusinessLogicLayer.Modules.WordsCounter.RequestModels;
@@ -25,9 +26,17 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
         public override async Task<GetBasicDataResponseModel> Handle(GetBasicDataQuery request, CancellationToken cancellationToken)
         {
-            GetBasicDataResponseModel responseModel = new GetBasicDataResponseModel();
+            GetBasicDataResponseModel responseModel = new GetBasicDataResponseModel
+            {
+                Characters = await Task.Run(() => GetCharactersCount(request.InputText), cancellationToken)
+            };
 
             return responseModel;
+        }
+
+        private static int GetCharactersCount(string inputText)
+        {
+            return inputText.Replace(Environment.NewLine, string.Empty).Length;
         }
     }
 }
