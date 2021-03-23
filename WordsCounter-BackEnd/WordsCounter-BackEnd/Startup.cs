@@ -4,6 +4,7 @@ using Application.Core.AppSettingsConfiguration.Models;
 using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
 using Application.Web.Core.Extensions;
+using Application.Web.Core.Providers;
 using Application.Web.Core.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -37,6 +38,8 @@ namespace Application.Web
             services.ConfigureMediatR();
 
             services.ConfigureSwaggerServices();
+
+            services.AddScopedServices();
 
             services.AddCors();
             services.AddControllers();

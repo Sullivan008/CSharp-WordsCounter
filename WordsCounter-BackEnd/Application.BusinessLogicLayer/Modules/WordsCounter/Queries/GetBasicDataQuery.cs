@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Application.BusinessLogicLayer.MediatR;
 using Application.BusinessLogicLayer.Modules.WordsCounter.RequestModels;
 using Application.BusinessLogicLayer.Modules.WordsCounter.ResponseModels;
+using Application.BusinessLogicLayer.Modules.WordsCounter.Services.Interfaces;
 using Application.DataAccessLayer.Context;
 using MediatR;
 
@@ -23,8 +25,12 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
     public class GetBasicDataQueryHandler : QueryBase<GetBasicDataQuery, GetBasicDataResponseModel>
     {
-        public GetBasicDataQueryHandler(WordsCounterReadOnlyDbContext context) : base(context)
-        { }
+        private readonly IWordService _wordService;
+
+        public GetBasicDataQueryHandler(WordsCounterReadOnlyDbContext context, IWordService wordService) : base(context)
+        {
+            _wordService = wordService;
+        }
 
         public override async Task<GetBasicDataResponseModel> Handle(GetBasicDataQuery request, CancellationToken cancellationToken)
         {
@@ -49,11 +55,11 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
             return inputText.Count(x => !char.IsWhiteSpace(x));
         }
 
-        private static int GetWordsCount(string inputText)
+        private int GetWordsCount(string inputText)
         {
-            Regex pattern = new Regex(@"[^\W](\w|[-']{1,2}(?=\w))*", RegexOptions.IgnorePatternWhitespace);
+            IEnumerable<string> words = _wordService.GetWords(inputText);
 
-            return pattern.Matches(inputText).Count;
+            return words.Count();
         }
 
         private static int GetSentencesCount(string inputText)
