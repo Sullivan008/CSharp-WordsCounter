@@ -1,3 +1,6 @@
+using Application.Core.AppSettingsConfiguration;
+using Application.Core.AppSettingsConfiguration.Enums;
+using Application.Core.AppSettingsConfiguration.Models;
 using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
 using Application.Web.Core.Extensions;
@@ -8,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Application.Web
 {
@@ -22,6 +26,8 @@ namespace Application.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CorsConfigurationModel>(_configuration.GetSection(AppSettingsConfigurations.GetConfigurationType(ConfigurationType.CorsConfiguration)));
+
             services.AddDbContext<WordsCounterDbContext>(options =>
                 options.UseSqlServer(
                     _configuration.GetConnectionString("DevConnection")
@@ -33,14 +39,20 @@ namespace Application.Web
 
             services.ConfigureSwaggerServices();
 
+            services.AddCors();
             services.AddControllers();
 
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider, IOptions<CorsConfigurationModel> corsConfiguration, IWebHostEnvironment env)
         {
             app.AddGlobalErrorHandlerMiddleware();
+
+            app.UseCors(builder => builder.WithOrigins(corsConfiguration.Value.SpecifiedOrigins)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 
