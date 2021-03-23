@@ -36,10 +36,10 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         {
             GetBasicDataResponseModel responseModel = new GetBasicDataResponseModel
             {
-                Characters = await Task.Run(() => GetCharactersCount(request.InputText), cancellationToken),
-                CharactersWithoutSpaces = await Task.Run(() => GetCharactersWithoutSpacesCount(request.InputText), cancellationToken),
-                Words = await Task.Run(() => GetWordsCount(request.InputText), cancellationToken),
-                Sentences = await Task.Run(() => GetSentencesCount(request.InputText), cancellationToken)
+                CharactersCount = await Task.Run(() => GetCharactersCount(request.InputText), cancellationToken),
+                CharactersWithoutSpacesCount = await Task.Run(() => GetCharactersWithoutSpacesCount(request.InputText), cancellationToken),
+                WordsCount = await Task.Run(() => GetWordsCount(request.InputText), cancellationToken),
+                SentencesCount = await Task.Run(() => GetSentencesCount(request.InputText), cancellationToken)
             };
 
             return responseModel;

@@ -2,12 +2,12 @@
 {
     public class GetBasicDataResponseModel
     {
-        public int Characters { get; init; }
+        public int CharactersCount { get; init; }
 
-        public int CharactersWithoutSpaces { get; init; }
+        public int CharactersWithoutSpacesCount { get; init; }
 
-        public int Words { get; init; }
+        public int WordsCount { get; init; }
 
-        public int Sentences { get; init; }
+        public int SentencesCount { get; init; }
     }
 }
