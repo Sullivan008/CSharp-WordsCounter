@@ -4,7 +4,13 @@
   </div>
   <div class="content-row">
     <div class="content-row-column">
-      <textarea class="form-control" placeholder="Type in or copy and paste your text here..."></textarea>
+      <form id="inputForm" [formGroup]="inputForm">
+        <textarea
+          class="form-control"
+          formControlName="inputText"
+          placeholder="Type in or copy and paste your text here..."
+        ></textarea>
+      </form>
     </div>
     <div class="content-row-column">
       <words-counter-text-analysis></words-counter-text-analysis>

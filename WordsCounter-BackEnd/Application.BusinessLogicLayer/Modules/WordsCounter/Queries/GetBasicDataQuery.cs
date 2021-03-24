@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.MediatR;
@@ -47,7 +46,9 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
         private static int GetCharactersCount(string inputText)
         {
-            return inputText.Replace(Environment.NewLine, string.Empty).Length;
+            const string newLineCharacter = "\n";
+
+            return inputText.Replace(newLineCharacter, string.Empty).Length;
         }
 
         private static int GetCharactersWithoutSpacesCount(string inputText)
@@ -64,7 +65,9 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
         private static int GetSentencesCount(string inputText)
         {
-            return Regex.Split(inputText, @"(?<=[\.!\?])\s+").Length;
+            char[] splitChars = { '.', '?', '!' };
+
+            return inputText.Split(splitChars, StringSplitOptions.RemoveEmptyEntries).Length;
         }
     }
 }

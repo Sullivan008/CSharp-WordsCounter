@@ -2,25 +2,25 @@
   <div class="flex-item">
     <div class="content">
       <p class="label">CHARACTERS</p>
-      <p class="value">0</p>
+      <p class="value">{{ (basicData$ | async).charactersCount }}</p>
     </div>
   </div>
   <div class="flex-item">
     <div class="content">
       <p class="label">CHARACTERS WITHOUT SPACES</p>
-      <p class="value">0</p>
+      <p class="value">{{ (basicData$ | async).charactersWithoutSpacesCount }}</p>
     </div>
   </div>
   <div class="flex-item">
     <div class="content">
       <p class="label">WORDS</p>
-      <p class="value">0</p>
+      <p class="value">{{ (basicData$ | async).wordsCount }}</p>
     </div>
   </div>
   <div class="flex-item">
     <div class="content">
       <p class="label">SENTENCES</p>
-      <p class="value">0</p>
+      <p class="value">{{ (basicData$ | async).sentencesCount }}</p>
     </div>
   </div>
 </div>
