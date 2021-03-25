@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
         public override async Task<GetTextAnalysisDataResponseModel> Handle(GetTextAnalysisDataQuery request, CancellationToken cancellationToken)
         {
-            ReadOnlyDictionary<TextAnalysisType, int> textAnalysisData = await Task.Run(GetTextAnalysisData, cancellationToken);
+            ReadOnlyDictionary<TextAnalysisType, int> textAnalysisData = await Task.Run(() => GetTextAnalysisData(request.InputText), cancellationToken);
 
             return new GetTextAnalysisDataResponseModel
             {
@@ -36,11 +37,21 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
             };
         }
 
-        private static ReadOnlyDictionary<TextAnalysisType, int> GetTextAnalysisData()
+        private static ReadOnlyDictionary<TextAnalysisType, int> GetTextAnalysisData(string inputText)
         {
-            Dictionary<TextAnalysisType, int> result = new();
+            Dictionary<TextAnalysisType, int> result = new()
+            {
+                { TextAnalysisType.ParagraphsCount, GetParagraphsCount(inputText) }
+            };
 
             return new ReadOnlyDictionary<TextAnalysisType, int>(result);
+        }
+
+        private static int GetParagraphsCount(string inputText)
+        {
+            const string paragraphSeparator = "\n";
+
+            return inputText.Split(paragraphSeparator, StringSplitOptions.RemoveEmptyEntries).Length;
         }
     }
 }

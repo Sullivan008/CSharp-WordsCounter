@@ -2,7 +2,7 @@
 {
     public enum TextAnalysisType
     {
-        Paragraphs = 1,
+        ParagraphsCount = 1,
         AlphanumericCharacters = 2,
         NumericCharacters = 3,
         UniqueWords = 4,
