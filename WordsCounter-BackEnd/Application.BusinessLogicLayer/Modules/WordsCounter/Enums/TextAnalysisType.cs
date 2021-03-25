@@ -7,7 +7,7 @@
         NumericCharactersCount = 3,
         AlphaCharactersCount = 4,
         UniqueWordsCount = 5,
-        ShortWords = 6,
+        ShortWordsCount = 6,
         LongWords = 7
     }
 }

@@ -54,6 +54,7 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
                 { TextAnalysisType.NumericCharactersCount, GetNumericCharactersCount(inputText) },
                 { TextAnalysisType.AlphaCharactersCount, GetAlphaCharactersCount(inputText) },
                 { TextAnalysisType.UniqueWordsCount, GetUniqueWordsCount(words) },
+                { TextAnalysisType.ShortWordsCount, GetShortWordsCount(words) },
             };
 
             return new ReadOnlyDictionary<TextAnalysisType, int>(result);
@@ -84,6 +85,13 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         private static int GetUniqueWordsCount(IEnumerable<string> words)
         {
             return new HashSet<string>(words.Select(x => x.ToLower())).Count;
+        }
+
+        private static int GetShortWordsCount(IEnumerable<string> words)
+        {
+            const int MAX_LENGTH = 3;
+
+            return words.Count(x => x.Length <= MAX_LENGTH);
         }
     }
 }
