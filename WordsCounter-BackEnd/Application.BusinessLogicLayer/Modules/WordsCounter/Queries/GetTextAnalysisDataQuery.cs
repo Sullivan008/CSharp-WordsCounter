@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.MediatR;
-using Application.BusinessLogicLayer.Modules.WordsCounter.Enums;
 using Application.BusinessLogicLayer.Modules.WordsCounter.RequestModels;
 using Application.BusinessLogicLayer.Modules.WordsCounter.ResponseModels;
 using Application.BusinessLogicLayer.Modules.WordsCounter.Services.Interfaces;
@@ -35,30 +33,18 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
         public override async Task<GetTextAnalysisDataResponseModel> Handle(GetTextAnalysisDataQuery request, CancellationToken cancellationToken)
         {
-            ReadOnlyDictionary<TextAnalysisType, int> textAnalysisData = await Task.Run(() => GetTextAnalysisData(request.InputText), cancellationToken);
+            IEnumerable<string> words = _wordService.GetWords(request.InputText);
 
             return new GetTextAnalysisDataResponseModel
             {
-                TextAnalysisElements = textAnalysisData
+                LongWordsCount = await Task.Run(() => GetLongWordsCount(words), cancellationToken),
+                ShortWordsCount = await Task.Run(() => GetShortWordsCount(words), cancellationToken),
+                UniqueWordsCount = await Task.Run(() => GetUniqueWordsCount(words), cancellationToken),
+                NumericCharactersCount = await Task.Run(() => GetNumericCharactersCount(request.InputText)),
+                ParagraphsCount = await Task.Run(() => GetParagraphsCount(request.InputText), cancellationToken),
+                AlphaCharactersCount = await Task.Run(() => GetAlphaCharactersCount(request.InputText), cancellationToken),
+                AlphanumericCharactersCount = await Task.Run(() => GetAlphanumericCharactersCount(request.InputText), cancellationToken)
             };
-        }
-
-        private ReadOnlyDictionary<TextAnalysisType, int> GetTextAnalysisData(string inputText)
-        {
-            IEnumerable<string> words = _wordService.GetWords(inputText);
-
-            Dictionary<TextAnalysisType, int> result = new()
-            {
-                { TextAnalysisType.ParagraphsCount, GetParagraphsCount(inputText) },
-                { TextAnalysisType.AlphanumericCharactersCount, GetAlphanumericCharactersCount(inputText) },
-                { TextAnalysisType.NumericCharactersCount, GetNumericCharactersCount(inputText) },
-                { TextAnalysisType.AlphaCharactersCount, GetAlphaCharactersCount(inputText) },
-                { TextAnalysisType.UniqueWordsCount, GetUniqueWordsCount(words) },
-                { TextAnalysisType.ShortWordsCount, GetShortWordsCount(words) },
-                { TextAnalysisType.LongWordsCount, GetLongWordsCount(words) },
-            };
-
-            return new ReadOnlyDictionary<TextAnalysisType, int>(result);
         }
 
         private static int GetParagraphsCount(string inputText)
