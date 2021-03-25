@@ -83,8 +83,6 @@ export class WordsCounterService {
       )
       .subscribe((response: TextAnalysisDataModel) => {
         this.textAnalysisDataSubject.next(response);
-
-        console.log(response);
       });
   }
 }
