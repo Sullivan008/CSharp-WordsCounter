@@ -8,6 +8,6 @@
         AlphaCharactersCount = 4,
         UniqueWordsCount = 5,
         ShortWordsCount = 6,
-        LongWords = 7
+        LongWordsCount = 7
     }
 }
