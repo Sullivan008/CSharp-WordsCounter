@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.MediatR;
@@ -41,7 +42,8 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         {
             Dictionary<TextAnalysisType, int> result = new()
             {
-                { TextAnalysisType.ParagraphsCount, GetParagraphsCount(inputText) }
+                { TextAnalysisType.ParagraphsCount, GetParagraphsCount(inputText) },
+                { TextAnalysisType.AlphanumericCharactersCount, GetAlphanumericCharactersCount(inputText) }
             };
 
             return new ReadOnlyDictionary<TextAnalysisType, int>(result);
@@ -52,6 +54,11 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
             const string paragraphSeparator = "\n";
 
             return inputText.Split(paragraphSeparator, StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+
+        private static int GetAlphanumericCharactersCount(string inputText)
+        {
+            return inputText.Count(char.IsLetterOrDigit);
         }
     }
 }

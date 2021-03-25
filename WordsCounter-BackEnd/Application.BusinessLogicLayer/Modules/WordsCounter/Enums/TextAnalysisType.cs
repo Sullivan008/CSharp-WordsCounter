@@ -3,7 +3,7 @@
     public enum TextAnalysisType
     {
         ParagraphsCount = 1,
-        AlphanumericCharacters = 2,
+        AlphanumericCharactersCount = 2,
         NumericCharacters = 3,
         UniqueWords = 4,
         ShortWords = 5,
