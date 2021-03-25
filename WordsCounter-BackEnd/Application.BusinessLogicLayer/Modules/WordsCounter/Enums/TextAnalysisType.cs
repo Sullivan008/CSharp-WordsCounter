@@ -4,7 +4,7 @@
     {
         ParagraphsCount = 1,
         AlphanumericCharactersCount = 2,
-        NumericCharacters = 3,
+        NumericCharactersCount = 3,
         UniqueWords = 4,
         ShortWords = 5,
         LongWords = 6
