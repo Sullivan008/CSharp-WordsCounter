@@ -6,6 +6,7 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { WordsCounterService } from '../services/words-counter.service';
 
 import { GetBasicDataRequestModel } from '../models/request-models/get-basic-data-request.model';
+import { GetTextAnalysisDataRequestModel } from '../models/request-models/get-text-analysis-data-request.model';
 
 @Component({
   selector: 'app-main-module',
@@ -37,6 +38,8 @@ export class WordsCounterComponent implements OnInit, OnDestroy {
         .valueChanges.pipe(debounceTime(300))
         .subscribe(text => {
           this.wordsCounterService.getBasicData({ inputText: text } as GetBasicDataRequestModel);
+
+          this.wordsCounterService.getTextAnalysisData({ inputText: text } as GetTextAnalysisDataRequestModel);
         })
     );
   }

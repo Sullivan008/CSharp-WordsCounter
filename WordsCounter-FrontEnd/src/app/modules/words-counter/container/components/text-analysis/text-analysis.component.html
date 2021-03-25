@@ -1,8 +1,39 @@
 <app-custom-accordion headerTitle="Text Analysis">
   <ul class="list-group">
     <words-counter-text-analysis-item
-      *ngFor="let item of textAnalysisItems"
-      [textAnalysisItem]="item"
-    ></words-counter-text-analysis-item>
+      [typeName]="'Paragraphs'"
+      [quantity]="(textAnalysisData$ | async).paragraphsCount"
+    >
+    </words-counter-text-analysis-item>
+    <words-counter-text-analysis-item
+      [typeName]="'Alphanumeric characters'"
+      [quantity]="(textAnalysisData$ | async).alphanumericCharactersCount"
+    >
+    </words-counter-text-analysis-item>
+    <words-counter-text-analysis-item
+      [typeName]="'Numeric characters'"
+      [quantity]="(textAnalysisData$ | async).numericCharactersCount"
+    >
+    </words-counter-text-analysis-item>
+    <words-counter-text-analysis-item
+      [typeName]="'Alpha characters'"
+      [quantity]="(textAnalysisData$ | async).alphaCharactersCount"
+    >
+    </words-counter-text-analysis-item>
+    <words-counter-text-analysis-item
+      [typeName]="'Unique words'"
+      [quantity]="(textAnalysisData$ | async).uniqueWordsCount"
+    >
+    </words-counter-text-analysis-item>
+    <words-counter-text-analysis-item
+      [typeName]="'Short words (<=3 characters)'"
+      [quantity]="(textAnalysisData$ | async).shortWordsCount"
+    >
+    </words-counter-text-analysis-item>
+    <words-counter-text-analysis-item
+      [typeName]="'Long words (>=3 characters)'"
+      [quantity]="(textAnalysisData$ | async).longWordsCount"
+    >
+    </words-counter-text-analysis-item>
   </ul>
 </app-custom-accordion>
