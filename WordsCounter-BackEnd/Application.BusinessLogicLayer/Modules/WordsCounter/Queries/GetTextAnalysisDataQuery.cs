@@ -8,6 +8,7 @@ using Application.BusinessLogicLayer.MediatR;
 using Application.BusinessLogicLayer.Modules.WordsCounter.Enums;
 using Application.BusinessLogicLayer.Modules.WordsCounter.RequestModels;
 using Application.BusinessLogicLayer.Modules.WordsCounter.ResponseModels;
+using Application.BusinessLogicLayer.Modules.WordsCounter.Services.Interfaces;
 using Application.DataAccessLayer.Context;
 using MediatR;
 
@@ -25,8 +26,12 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
     public class GetTextAnalysisDataQueryHandler : QueryBase<GetTextAnalysisDataQuery, GetTextAnalysisDataResponseModel>
     {
-        public GetTextAnalysisDataQueryHandler(WordsCounterReadOnlyDbContext context) : base(context)
-        { }
+        private readonly IWordService _wordService;
+
+        public GetTextAnalysisDataQueryHandler(WordsCounterReadOnlyDbContext context, IWordService wordService) : base(context)
+        {
+            _wordService = wordService;
+        }
 
         public override async Task<GetTextAnalysisDataResponseModel> Handle(GetTextAnalysisDataQuery request, CancellationToken cancellationToken)
         {
@@ -38,14 +43,17 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
             };
         }
 
-        private static ReadOnlyDictionary<TextAnalysisType, int> GetTextAnalysisData(string inputText)
+        private ReadOnlyDictionary<TextAnalysisType, int> GetTextAnalysisData(string inputText)
         {
+            IEnumerable<string> words = _wordService.GetWords(inputText);
+
             Dictionary<TextAnalysisType, int> result = new()
             {
                 { TextAnalysisType.ParagraphsCount, GetParagraphsCount(inputText) },
                 { TextAnalysisType.AlphanumericCharactersCount, GetAlphanumericCharactersCount(inputText) },
                 { TextAnalysisType.NumericCharactersCount, GetNumericCharactersCount(inputText) },
-                { TextAnalysisType.AlphaCharactersCount, GetAlphaCharactersCount(inputText) }
+                { TextAnalysisType.AlphaCharactersCount, GetAlphaCharactersCount(inputText) },
+                { TextAnalysisType.UniqueWordsCount, GetUniqueWordsCount(words) },
             };
 
             return new ReadOnlyDictionary<TextAnalysisType, int>(result);
@@ -71,6 +79,11 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         private static int GetAlphaCharactersCount(string inputText)
         {
             return inputText.Count(char.IsLetter);
+        }
+
+        private static int GetUniqueWordsCount(IEnumerable<string> words)
+        {
+            return new HashSet<string>(words.Select(x => x.ToLower())).Count;
         }
     }
 }
