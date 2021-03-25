@@ -26,5 +26,13 @@ namespace Application.Web.Controllers
 
             return Ok(responseModel);
         }
+
+        [HttpPost("GetTextAnalysisData")]
+        public async Task<ActionResult> GetTextAnalysisData(GetTextAnalysisDataRequestModel requestModel)
+        {
+            GetTextAnalysisDataResponseModel responseModel = await _mediator.Send(new GetTextAnalysisDataQuery(requestModel));
+
+            return Ok(responseModel);
+        }
     }
 }
