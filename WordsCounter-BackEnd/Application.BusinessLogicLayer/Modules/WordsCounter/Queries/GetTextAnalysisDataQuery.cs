@@ -44,7 +44,8 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
             {
                 { TextAnalysisType.ParagraphsCount, GetParagraphsCount(inputText) },
                 { TextAnalysisType.AlphanumericCharactersCount, GetAlphanumericCharactersCount(inputText) },
-                { TextAnalysisType.NumericCharactersCount, GetNumericCharactersCount(inputText) }
+                { TextAnalysisType.NumericCharactersCount, GetNumericCharactersCount(inputText) },
+                { TextAnalysisType.AlphaCharactersCount, GetAlphaCharactersCount(inputText) }
             };
 
             return new ReadOnlyDictionary<TextAnalysisType, int>(result);
@@ -65,6 +66,11 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
         private static int GetNumericCharactersCount(string inputText)
         {
             return inputText.Count(char.IsDigit);
+        }
+
+        private static int GetAlphaCharactersCount(string inputText)
+        {
+            return inputText.Count(char.IsLetter);
         }
     }
 }
