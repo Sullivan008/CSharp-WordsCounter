@@ -34,5 +34,13 @@ namespace Application.Web.Controllers
 
             return Ok(responseModel);
         }
+
+        [HttpPost("GetKeywordDensityData")]
+        public async Task<ActionResult> GetKeywordDensityData(GetKeywordDensityDataRequestModel requestModel)
+        {
+            GetKeywordDensityDataResponseModel responseModel = await _mediator.Send(new GetKeywordDensityDataQuery(requestModel));
+
+            return Ok(responseModel);
+        }
     }
 }
