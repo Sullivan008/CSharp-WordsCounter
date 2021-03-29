@@ -1,12 +1,14 @@
-import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 import { WordsCounterService } from '../services/words-counter.service';
 
+import { KeywordDensityItem } from '../models/keyword-density-item.model';
 import { GetBasicDataRequestModel } from '../models/request-models/get-basic-data-request.model';
 import { GetTextAnalysisDataRequestModel } from '../models/request-models/get-text-analysis-data-request.model';
+import { GetKeywordDensityDataRequestModel } from '../models/request-models/get-keyword-density-data-request.model';
 
 @Component({
   selector: 'app-main-module',
@@ -22,6 +24,14 @@ export class WordsCounterComponent implements OnInit, OnDestroy {
 
   public inputText(): AbstractControl {
     return this.inputForm.get('inputText');
+  }
+
+  public get topKeywordDensityData(): Observable<KeywordDensityItem[]> {
+    return this.wordsCounterService.topKeywordDensityData$;
+  }
+
+  public get allKeywordDensityData(): Observable<KeywordDensityItem[]> {
+    return this.wordsCounterService.allKeywordDensityData$;
   }
 
   //#endregion
@@ -40,6 +50,8 @@ export class WordsCounterComponent implements OnInit, OnDestroy {
           this.wordsCounterService.getBasicData({ inputText: text } as GetBasicDataRequestModel);
 
           this.wordsCounterService.getTextAnalysisData({ inputText: text } as GetTextAnalysisDataRequestModel);
+
+          this.wordsCounterService.getKeywordDensityData({ inputText: text } as GetKeywordDensityDataRequestModel);
         })
     );
   }

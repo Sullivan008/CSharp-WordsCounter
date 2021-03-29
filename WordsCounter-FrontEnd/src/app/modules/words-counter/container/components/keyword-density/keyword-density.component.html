@@ -1,7 +1,7 @@
-<app-custom-accordion headerTitle="{{ panelTitle }}">
+<app-custom-accordion headerTitle="{{ panelTitle }}" [isOpen]="(keywordDensityData | async).length !== 0">
   <ul class="list-group">
     <words-counter-keyword-density-item
-      *ngFor="let item of keywordDensities"
+      *ngFor="let item of keywordDensityData | async"
       [keywordDensityItem]="item"
     ></words-counter-keyword-density-item>
   </ul>

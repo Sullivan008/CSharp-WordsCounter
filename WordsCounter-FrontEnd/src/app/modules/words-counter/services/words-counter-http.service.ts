@@ -7,6 +7,8 @@ import { GetBasicDataRequestModel } from '../models/request-models/get-basic-dat
 import { GetBasicDataResponseModel } from '../models/response-models/get-basic-data-response.model';
 import { GetTextAnalysisDataRequestModel } from '../models/request-models/get-text-analysis-data-request.model';
 import { GetTextAnalysisDataResponseModel } from '../models/response-models/get-text-analysis-data-response.model';
+import { GetKeywordDensityDataRequestModel } from '../models/request-models/get-keyword-density-data-request.model';
+import { GetKeywordDensityDataResponseModel } from '../models/response-models/get-keyword-density-data-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +32,13 @@ export class WordsCounterHttpService {
     const requestUrl: string = `${this._baseUrl}/GetTextAnalysisData`;
 
     return this.http.post<GetTextAnalysisDataResponseModel>(requestUrl, requestModel);
+  }
+
+  public getKeywordDensityData(
+    requestModel: GetKeywordDensityDataRequestModel
+  ): Observable<GetKeywordDensityDataResponseModel> {
+    const requestUrl: string = `${this._baseUrl}/GetKeywordDensityData`;
+
+    return this.http.post<GetKeywordDensityDataResponseModel>(requestUrl, requestModel);
   }
 }

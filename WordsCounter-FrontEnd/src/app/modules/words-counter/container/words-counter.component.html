@@ -18,10 +18,16 @@
   </div>
   <div class="content-row">
     <div class="content-row-column">
-      <words-counter-keyword-density panelTitle="Keyword Density (TOP 10)"></words-counter-keyword-density>
+      <words-counter-keyword-density
+        panelTitle="Keyword Density (TOP 10)"
+        [keywordDensityData]="topKeywordDensityData"
+      ></words-counter-keyword-density>
     </div>
     <div class="content-row-column">
-      <words-counter-keyword-density panelTitle="Keyword Density"></words-counter-keyword-density>
+      <words-counter-keyword-density
+        panelTitle="Keyword Density"
+        [keywordDensityData]="allKeywordDensityData"
+      ></words-counter-keyword-density>
     </div>
   </div>
 </div>
