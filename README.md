@@ -1,4 +1,4 @@
-# C# - Character Calculator - Online Character Count Tool [Year of Development: 2017 and 2021]
+# Angular 10 - C# .NET 5 Web API - Character Calculator - Online Character Count Tool Application with Angular 10 and .NET 5 Web API [Year of Development: 2017 and 2021]
 
 About the application technologies and operation:
 
