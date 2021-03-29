@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.MediatR;
@@ -42,9 +44,32 @@ namespace Application.BusinessLogicLayer.Modules.WordsCounter.Queries
 
         private IList<KeywordDensityListItemResponseModel> GetKeywordDensityList(string inputText)
         {
-            IList<KeywordDensityListItemResponseModel> result = new List<KeywordDensityListItemResponseModel>();
+            IEnumerable<string> words = _wordService.GetWords(inputText)
+                                             .Select(x => x.ToLower())
+                                             .ToList();
 
-            return result;
+            int allWordsCount = GetAllWordsCount(words);
+
+            return words.ToHashSet()
+                        .Select(x =>
+                        {
+                            int quantity = words.Count(y => y == x);
+
+                            return new KeywordDensityListItemResponseModel
+                            {
+                                Keyword = x,
+                                Quantity = quantity,
+                                Percentage = Math.Round((double)quantity / allWordsCount * 100d, 1, MidpointRounding.AwayFromZero)
+                            };
+                        })
+                        .OrderByDescending(x => x.Quantity)
+                        .ThenBy(x => x.Keyword)
+                        .ToList();
+        }
+
+        private static int GetAllWordsCount(IEnumerable<string> words)
+        {
+            return words.Count();
         }
     }
 }
