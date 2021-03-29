@@ -1,3 +1,3 @@
 export const MODULE_NAMES: { [keyCode: string]: string } = {
-  ['MAIN']: 'Words Counter',
+  ['MAIN']: 'Character Calculator - Online Character Count Tool',
 };
